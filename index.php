@@ -1,24 +1,44 @@
 <?php
-include_once "config/database.php";
+include_once"objeto/produtosController.php";
 
-$banco = new Database();
-$bd = $banco->conectar();
+$controller = new ProdutosController();
+$produtos = $controller->index();
+global $produtos;
 
-if ($bd) {
-    $sql = "SELECT * FROM produtos";
-    $resultado = $bd->query($sql);
-    $resultado ->execute();
-    $resultado = $resultado->fetchAll(PDO::FETCH_ASSOC);
+?>
 
-    echo "<h2>Banco conectado com sucesso!</h2>";
-    foreach ($resultado as $produtos) {
-        echo "<br><h1>". $produtos['nome'] . "</h1>";
-        echo "<strong>ID do produto:</strong> " . $produtos['id'] . "<br>";
-        echo "<strong>Descrição:</strong> " . $produtos['descricao'] . "<br>";
-        echo "<strong>Quantidade:</strong> " . $produtos['quantidade'] . "<br>";
-        echo "<strong>Preço:</strong> " . $produtos['preco'] . "<br>";
-    }
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loja</title>
+</head>
+<body>
 
-} else {
-    echo "Falha ao conectar banco";
-};
+<h1>Loja de Informática</h1>
+<h2>Produtos</h2>
+
+<table>
+    <tr>
+        <td>ID</td>
+        <td>Nome</td>
+        <td>Descrição</td>
+        <td>Quantidade</td>
+        <td>Preço</td>
+    </tr>
+    <?php if($produtos) : ?>
+    <?php foreach($produtos as $produto) : ?>
+    <tr>
+        <td><?php echo $produto->id;?></td>
+        <td><?php echo $produto->nome;?></td>
+        <td><?php echo $produto->descricao;?></td>
+        <td><?php echo $produto->quantidade;?></td>
+        <td><?php echo $produto->preco;?></td>
+    </tr>
+    <?php endforeach; ?>
+    <?php endif; ?>
+</table>
+
+</body>
+</html>
