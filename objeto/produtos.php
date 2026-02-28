@@ -22,12 +22,24 @@ Class produtos {
     }
 
     public function pesquisaProduto($id){
-        $sql = "SELECT * FROM produtos WHERE ID = :id";
+
+        $sql = "SELECT * FROM produtos WHERE id = :id";
         $resultado = $this->bd->prepare($sql);
         $resultado->bindParam(':id', $id);
         $resultado->execute();
 
-        return $resultado->fetch(PDO::FETCH_OBJ);
+        return $resultado->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function pesquisaPorNome($nome){
+
+        $sql = "SELECT * FROM produtos WHERE nome LIKE :nome";
+        $resultado = $this->bd->prepare($sql);
+        $resultado->bindValue(':nome', '%' . $nome . '%');
+        $resultado->execute();
+
+        return $resultado->fetchAll(PDO::FETCH_OBJ);
+
     }
 
     public function cadastrar(){

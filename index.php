@@ -8,7 +8,14 @@ $a = null;
 
 if($_SERVER["REQUEST_METHOD"] === "POST"){
     if(isset($_POST["pesquisar"])){
-        $a = $controller->pesquisaProduto($_POST["pesquisar"]);
+        $valor = $_POST["pesquisar"];
+        $tipo = $_POST["tipo"];
+
+        if($tipo == "id"){ // ID
+            $a = $controller->pesquisaProduto($valor);
+        } else { // Nome
+            $a = $controller->pesquisaPorNome($valor);
+        }
     }
 }
 
@@ -37,7 +44,11 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 <h3>Pesquisar Produto</h3>
 <form method="POST" action="index.php">
     <label>ID</label>
-    <input type="number" name="pesquisar">
+    <input type="text" name="pesquisar">
+    <select name="tipo">
+        <option value=id>ID</option>
+        <option value="nome">Nome</option>
+    </select>
     <button>Pesquisar</button>
 </form>
 
@@ -47,12 +58,12 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <td>Nome</td>
     </tr>
     <?php if($a) : ?>
-        <!--        --><?php //foreach($a as $produto) : ?>
-        <tr>
-            <td><?= $a->id;?></td>
-            <td><?= $a->nome;?></td>
-        </tr>
-        <!--        --><?php //endforeach; ?>
+        <?php foreach($a as $produto) : ?>
+            <tr>
+                <td><?= $produto->id; ?></td>
+                <td><?= $produto->nome; ?></td>
+            </tr>
+        <?php endforeach; ?>
     <?php endif; ?>
 
 </table>
