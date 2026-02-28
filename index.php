@@ -11,11 +11,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         $valor = $_POST["pesquisar"];
         $tipo = $_POST["tipo"];
 
-        if($tipo == "id"){ // ID
-            $a = $controller->pesquisaProduto($valor);
-        } else { // Nome
-            $a = $controller->pesquisaPorNome($valor);
+        if($_SERVER["REQUEST_METHOD"] === "POST"){
+            if(isset($_POST["pesquisar"])){
+                $a = $controller->pesquisaProduto($_POST["pesquisar"], $_POST["tipo"]);
+            }
+
         }
+
     }
 }
 

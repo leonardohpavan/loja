@@ -15,13 +15,10 @@ Class produtosController {
         return $this->produto->lerTodos();
     }
 
-    public function pesquisaProduto($id){
-        return $this->produto->pesquisaProduto($id);
+    public function pesquisaProduto($pesquisa, $tipo){
+        return $this->produto->pesquisaProduto($pesquisa, $tipo);
     }
 
-    public function pesquisaPorNome($nome){
-        return $this->produto->pesquisaPorNome($nome);
-    }
 
     public function cadastrarProduto($dados){
         $this->produto->nome = $dados["nome"];

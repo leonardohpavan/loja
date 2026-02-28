@@ -21,22 +21,16 @@ Class produtos {
         return $resultado->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function pesquisaProduto($id){
-
-        $sql = "SELECT * FROM produtos WHERE id = :id";
+    public function pesquisaProduto($pesquisa, $tipo){
+        if($tipo == "id"){
+            $sql = "SELECT * FROM produtos WHERE id = :pesquisa";
+        } else {
+            $sql = "SELECT * FROM produtos WHERE nome LIKE :pesquisa";
+            $pesquisa = "%".$pesquisa."%";
+        }
         $resultado = $this->bd->prepare($sql);
-        $resultado->bindParam(':id', $id);
-        $resultado->execute();
-
-        return $resultado->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    public function pesquisaPorNome($nome){
-
-        $sql = "SELECT * FROM produtos WHERE nome LIKE :nome";
-        $resultado = $this->bd->prepare($sql);
-        $resultado->bindValue(':nome', '%' . $nome . '%');
-        $resultado->execute();
+        $resultado -> bindParam(':pesquisa', $pesquisa);
+        $resultado -> execute();
 
         return $resultado->fetchAll(PDO::FETCH_OBJ);
 
