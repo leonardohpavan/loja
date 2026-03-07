@@ -21,6 +21,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     }
 }
 
+if($_SERVER["REQUEST_METHOD"] === "GET"){
+    if(isset($_GET["excluir"])){
+        $a = $controller->excluirProduto($_GET["excluir"]);
+    }
+}
+
+
 ?>
 
 <!doctype html>
@@ -64,6 +71,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
             <tr>
                 <td><?= $produto->id; ?></td>
                 <td><?= $produto->nome; ?></td>
+
             </tr>
         <?php endforeach; ?>
     <?php endif; ?>
@@ -86,6 +94,9 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
         <td><?php echo $produto->descricao;?></td>
         <td><?php echo $produto->quantidade;?></td>
         <td><?php echo $produto->preco;?></td>
+        <td><a href="atualizar.php?alterar=<?= $produto->id ?>">Alterar</a></td>
+        <td><a href="index.php?excluir=<?= $produto->id ?>">Excluir</a></td>
+
     </tr>
     <?php endforeach; ?>
     <?php endif; ?>
